@@ -4,6 +4,7 @@ import {
   deleteProduct,
   getAdminProducts,
   getAllCategories,
+  getAllProducts,
   getLatestProducts,
   getSingleProduct,
   newProduct,
@@ -15,6 +16,9 @@ const app = express.Router();
 
 // /api/v1/product/new
 app.post("/new", isAdmin, singleUpload, newProduct);
+
+// for searching with filters
+app.get("/all", getAllProducts);
 
 // /api/v1/product/latest
 app.get("/latest", getLatestProducts);
