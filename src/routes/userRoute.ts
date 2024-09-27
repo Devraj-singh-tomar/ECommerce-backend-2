@@ -1,9 +1,21 @@
 import express from "express";
-import { newUser } from "../controllers/userController.js";
+import {
+  deleteUser,
+  getAllUsers,
+  getUser,
+  newUser,
+} from "../controllers/userController.js";
 
 const app = express.Router();
 
 // /api/v1/user/new
 app.post("/new", newUser);
+
+// /api/v1/user/all
+app.get("/all", getAllUsers);
+
+// /api/v1/user/dynamicID
+app.get("/:id", getUser);
+app.delete("/:id", deleteUser);
 
 export default app;
