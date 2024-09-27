@@ -5,6 +5,7 @@ import {
   getUser,
   newUser,
 } from "../controllers/userController.js";
+import { isAdmin } from "../middlewares/authMiddleware.js";
 
 const app = express.Router();
 
@@ -12,10 +13,10 @@ const app = express.Router();
 app.post("/new", newUser);
 
 // /api/v1/user/all
-app.get("/all", getAllUsers);
+app.get("/all", isAdmin, getAllUsers);
 
 // /api/v1/user/dynamicID
 app.get("/:id", getUser);
-app.delete("/:id", deleteUser);
+app.delete("/:id", isAdmin, deleteUser);
 
 export default app;
