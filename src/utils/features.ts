@@ -1,11 +1,11 @@
 import mongoose, { mongo } from "mongoose";
-import { InvalidateCacheProps } from "../types/types.js";
+import { InvalidateCacheProps, OrderItemType } from "../types/types.js";
 import { myCache } from "../app.js";
 import { Product } from "../models/productModel.js";
 
-export const connectDB = () => {
+export const connectDB = (uri: string) => {
   mongoose
-    .connect("mongodb://localhost:27017", {
+    .connect(uri, {
       dbName: "Ecommerce_2",
     })
     .then((c) => console.log(`DB connected to ${c.connection.host} `))
@@ -36,5 +36,17 @@ export const inValidateCache = async ({
   if (order) {
   }
   if (admin) {
+  }
+};
+
+// reducing stock after ordering
+export const reduceStock = async (orderItems: OrderItemType[]) => {
+  for (let i = 0; i < orderItems.length; i++) {
+    const order = orderItems[i];
+
+    const product = await Product.findById(order.productId);
+    if (!product) throw new Error("Product not found");
+    product.stock -= order.quantity;
+    await product.save();
   }
 };
