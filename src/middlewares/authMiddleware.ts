@@ -12,7 +12,7 @@ export const isAdmin = TryCatch(async (req, res, next) => {
   if (!user) return next(new ErrorHandler("Provided wrong ID", 401));
 
   if (user.role !== "admin")
-    return next(new ErrorHandler("you are not the admin", 401));
+    return next(new ErrorHandler("you are not the admin", 403));
 
   next();
 });

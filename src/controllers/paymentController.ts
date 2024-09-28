@@ -15,3 +15,37 @@ export const createCoupon = TryCatch(async (req, res, next) => {
     message: `Code - ${coupon} created successfully`,
   });
 });
+
+export const applyDiscount = TryCatch(async (req, res, next) => {
+  const { coupon } = req.query;
+
+  const discount = await Coupon.findOne({ code: coupon });
+
+  if (!discount) return next(new ErrorHandler("Wrong coupon code", 400));
+
+  return res.status(201).json({
+    success: true,
+    discount: discount.amount,
+  });
+});
+
+export const allCoupon = TryCatch(async (req, res, next) => {
+  const coupons = await Coupon.find({});
+
+  return res.status(201).json({
+    success: true,
+    coupons,
+  });
+});
+
+export const deleteCoupon = TryCatch(async (req, res, next) => {
+  const { id } = req.params;
+  const deleteCoupon = await Coupon.findByIdAndDelete(id);
+
+  if (!deleteCoupon) return next(new ErrorHandler("Wrong coupon ID", 400));
+
+  return res.status(200).json({
+    success: true,
+    message: `Coupon - ${deleteCoupon.code} successfully deleted`,
+  });
+});
