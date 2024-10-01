@@ -4,6 +4,7 @@ import {
   allCoupon,
   applyDiscount,
   createCoupon,
+  createPaymentIntent,
   deleteCoupon,
 } from "../controllers/paymentController.js";
 
@@ -11,6 +12,8 @@ const app = express.Router();
 
 // /api/v1/payment/coupon/new
 app.post("/coupon/new", isAdmin, createCoupon);
+
+app.post("/create", createPaymentIntent);
 
 app.get("/discount", applyDiscount);
 
