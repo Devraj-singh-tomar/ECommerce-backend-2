@@ -2,7 +2,6 @@ import mongoose, { Document, mongo } from "mongoose";
 import { InvalidateCacheProps, OrderItemType } from "../types/types.js";
 import { myCache } from "../app.js";
 import { Product } from "../models/productModel.js";
-import { Order } from "../models/orderModel.js";
 
 export const connectDB = (uri: string) => {
   mongoose
@@ -13,7 +12,7 @@ export const connectDB = (uri: string) => {
     .catch((e) => console.log(e));
 };
 
-export const inValidateCache = async ({
+export const inValidateCache = ({
   product,
   order,
   admin,
@@ -46,6 +45,12 @@ export const inValidateCache = async ({
   }
 
   if (admin) {
+    myCache.del([
+      "admin-stats",
+      "admin-pie-chart",
+      "admin-bar-charts",
+      "admin-line-charts",
+    ]);
   }
 };
 
