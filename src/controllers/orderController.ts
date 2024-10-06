@@ -25,8 +25,8 @@ export const newOrder = TryCatch(
       !user ||
       !subtotal ||
       !tax ||
-      !shippingCharges ||
-      !discount ||
+      // !shippingCharges ||
+      // !discount ||
       !total
     )
       return next(new ErrorHandler("Please add all fields", 400));
